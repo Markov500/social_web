@@ -1,0 +1,86 @@
+<mat-card [formGroup]="mainForm" class="main-form">
+    <mat-card-title>Inscription</mat-card-title>
+
+
+    <mat-card class="form-card" formGroupName="personalInfo">
+        <mat-card-subtitle>Informations personnelles</mat-card-subtitle>
+        <div class="form-row">
+            <mat-form-field>
+                <mat-label>Nom</mat-label>
+                <input type="text" matInput formControlName="nom">
+                <mat-error>Ce champ est obligatoire</mat-error>
+            </mat-form-field>
+            <mat-form-field>
+                <mat-label>Prenom</mat-label>
+                <input type="text" matInput formControlName="prenom">
+                <mat-error>Ce champ est obligatoire</mat-error>
+            </mat-form-field>
+        </div>
+    </mat-card>
+
+
+    <mat-card class="form-card">
+        <mat-card-subtitle>Comment préférez-vous que l'on vous contacte ?</mat-card-subtitle>
+        <mat-radio-group formControlName="contactPreference">
+            <mat-radio-button value="email" color="primary">Email</mat-radio-button>
+            <mat-radio-button value="phone" color="primary">Téléphone</mat-radio-button>
+        </mat-radio-group>
+    </mat-card>
+
+
+    <mat-card class="form-card" formGroupName="email" *ngIf="showMailCard$ | async">
+        <mat-card-subtitle>Email</mat-card-subtitle>
+        <div class="form-row">
+            <mat-form-field>
+                <mat-label>Email</mat-label>
+                <input type="text" matInput formControlName="email">
+                <mat-error>{{getErrorMessage(emailCtrl)}}</mat-error>
+            </mat-form-field>
+            <mat-form-field>
+                <mat-label>Confimation de l'email</mat-label>
+                <input type="text" matInput formControlName="confirm">
+                <mat-error>{{getErrorMessage(emailConfCtrl)}}</mat-error>
+            </mat-form-field>
+        </div>
+        <small class="error-text" *ngIf="emailConfirmError$ | async"> Les deux champs ne sont pas conformes</small>
+    </mat-card>
+
+
+    <mat-card class="form-card" *ngIf="showPhoneCard$ | async">
+        <mat-card-subtitle>Téléphone</mat-card-subtitle>
+        <mat-form-field>
+            <mat-label>Téléphone</mat-label>
+            <input type="tel" matInput formControlName="phone">
+            <mat-error>{{getErrorMessage(phoneCtrl)}}</mat-error>
+        </mat-form-field>
+    </mat-card>
+
+
+    <mat-card class="form-card" formGroupName="loginInfo">
+        <mat-card-subtitle>Informations de connexion</mat-card-subtitle>
+        <mat-form-field>
+            <mat-label>Nom d'utilisateur</mat-label>
+            <input type="tel" matInput formControlName="username">
+            <mat-error>Ce champ est obligatoire</mat-error>
+        </mat-form-field>
+        <div class="form-row">
+            <mat-form-field>
+                <mat-label>Mot de passe</mat-label>
+                <input type="password" matInput formControlName="password">
+                <mat-error>{{getErrorMessage(passwordCtrl)}}</mat-error>
+            </mat-form-field>
+            <mat-form-field>
+                <mat-label>Confimation du mot de passe</mat-label>
+                <input type="password" matInput formControlName="confirmPassword">
+                <mat-error>{{getErrorMessage(passwordConfCtrl)}}</mat-error>
+            </mat-form-field>
+        </div>
+        <small class="error-text" *ngIf="passwordConfirmError$ | async"> Les deux champs ne sont pas conformes</small>
+    </mat-card>
+    <mat-progress-bar mode="indeterminate" *ngIf="loading"></mat-progress-bar>
+    <div *ngIf="!mainForm.valid">
+        Un ou plusieurs informations invalides
+    </div>
+    <mat-card-actions *ngIf="mainForm.valid">
+        <button mat-flat-button color="primary" [disabled]="loading" (click)="onSubmitForm()">ENREGISTRER</button>
+    </mat-card-actions>

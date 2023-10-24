@@ -1,0 +1,22 @@
+ul {
+    list-style: none;
+}
+
+li {
+    display: inline-block;
+    margin-right: 20px;
+}
+
+a {
+    color: white;
+    text-decoration: none;
+}
+
+a:hover {
+    color: wheat;
+}
+
+.active-link {
+    color: wheat;
+    text-decoration: underline;
+}

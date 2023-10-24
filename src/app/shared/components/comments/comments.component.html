@@ -1,0 +1,20 @@
+<div class="comments-row">
+    <mat-form-field>
+        <input type="text" matInput placeholder="Laissez un commentaire…" [formControl]="commentCtrl">
+    </mat-form-field>
+    <button mat-icon-button color="primary" (click)="onLeaveComment()" [disabled]="commentCtrl.invalid">
+        <mat-icon>send</mat-icon>
+    </button>
+</div>
+<mat-list @list>
+    <mat-list-item *ngFor="let com of comments; let i = index" [@listeItem]="listItemState[i]"
+        (mouseenter)="mouseEnter(i)" (mouseleave)="mouseLeave(i)" matListItemLine>
+        <span class="text">
+            {{com.comment}}
+        </span>
+        <span mat-card-subtitle class="date">
+            {{com.createdDate | date}}
+        </span>
+
+    </mat-list-item>
+</mat-list>
